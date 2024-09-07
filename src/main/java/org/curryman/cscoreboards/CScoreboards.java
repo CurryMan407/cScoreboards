@@ -199,11 +199,14 @@ public class CScoreboards extends JavaPlugin implements Listener {
             }
         }
         if (args.length == 0) {
-            Player player = (Player) sender;
-            if (!player.hasPermission("csb.use")) {
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + noPerms));
+            if (!(sender instanceof Player)) {
+                getLogger().info("This command can only be issued in game");
+            }
+            if (!sender.hasPermission("csb.use")) {
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + noPerms));
                 return true;
             }
+
             sender.sendMessage(ChatColor.GOLD + "-----------------------------");
             sender.sendMessage(ChatColor.YELLOW + " ");
             sender.sendMessage(ChatColor.GOLD + "cScoreboards");
@@ -216,23 +219,25 @@ public class CScoreboards extends JavaPlugin implements Listener {
             return true;
         }
         if (args[0].equalsIgnoreCase("reload")) {
-            Player player = (Player) sender;
-            if (!player.hasPermission("csb.use")) {
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + noPerms));
+            if (!sender.hasPermission("csb.use")) {
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + noPerms));
                 return true;
             }
-            reloadPlugin();
             if (sender instanceof Player) {
-                ((Player) sender).sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + reloadMessage));
+                reloadPlugin();
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + reloadMessage));
             } else {
-                getLogger().info("cScoreboards has been reloaded successfully");
+                getLogger().info("This command can only be issued in game");
             }
         }
         if (args[0].equalsIgnoreCase("info")) {
-            Player player = (Player) sender;
-            if (!player.hasPermission("csb.use")) {
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + noPerms));
+
+            if (!sender.hasPermission("csb.use")) {
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + noPerms));
                 return true;
+            }
+            if (!(sender instanceof Player)) {
+                getLogger().info("This command can only be issued in game");
             }
             sender.sendMessage(ChatColor.GOLD + "-----------------------------");
             sender.sendMessage(ChatColor.YELLOW + " ");
